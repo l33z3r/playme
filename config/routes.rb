@@ -8,6 +8,10 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'home#index'
 
+  get 'qrcode/login_attempt' => 'qrcode#login_attempt'
+  post 'qrcode/login' => 'qrcode#login'
+  post 'qrcode/device_verify' => 'qrcode#device_verify'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
