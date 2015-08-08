@@ -16,4 +16,7 @@ class Song < ActiveRecord::Base
   belongs_to :genre
   belongs_to :artist
   has_and_belongs_to_many :users
+
+  validates :artist, presence: true
+  validates :url, uniqueness: true
 end

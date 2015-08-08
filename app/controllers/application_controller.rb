@@ -4,4 +4,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception, :except => [:device_verify]
 
   before_action :authenticate_user!, except: [:login_attempt, :login, :device_verify]
+
 end
+

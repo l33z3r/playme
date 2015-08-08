@@ -21,10 +21,10 @@
         <td><%= song.url %></td>
         <td><%= song.genre %></td>
         <td><%= song.difficulty %></td>
-        <td><%= song.artist %></td>
-        <td><%= link_to 'Show', song %></td>
-        <td><%= link_to 'Edit', edit_song_path(song) %></td>
-        <td><%= link_to 'Destroy', song, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= song.artist.name %></td>
+        <td><%= link_to 'Show', api_song_path(song) %></td>
+        <td><%= link_to 'Edit', edit_api_song_path(song) %></td>
+        <td><%= link_to 'Destroy', api_song_path(song), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -32,4 +32,4 @@
 
 <br>
 
-<%= link_to 'New Song', new_song_path %>
+<%= link_to 'New Song', new_api_song_path %>

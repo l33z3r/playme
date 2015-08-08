@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resources :songs
+  namespace :api do
+    resources :songs
+  end
+
   devise_for :users
   get 'home/index'
 
