@@ -1,4 +1,6 @@
-$ ->
+$('.qrcode.login_attempt').ready ->
+  alert("ready to start logging in ");
+
   tryLogin = =>
     console.log("trying login")
 
