@@ -19,4 +19,10 @@ class Song < ActiveRecord::Base
 
   validates :artist, presence: true
   validates :url, uniqueness: true
+
+  after_create :harvest_song_url
+
+  def harvest_song_url
+    SongsWorker.perform_async(self.id)
+  end
 end

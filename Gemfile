@@ -36,6 +36,10 @@ gem 'redcarpet'
 
 gem 'haml-rails'
 
+gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'slim'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -54,6 +58,10 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  #live reloading
+  gem 'rack-livereload'
+  gem 'guard-livereload', '~> 2.4', require: false
 end
 
 group :production do

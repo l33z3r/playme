@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   namespace :api do
     resources :songs
@@ -15,6 +17,8 @@ Rails.application.routes.draw do
   get 'qrcode/login_attempt' => 'qrcode#login_attempt'
   post 'qrcode/login' => 'qrcode#login'
   post 'qrcode/device_verify' => 'qrcode#device_verify'
+
+  mount Sidekiq::Web, at: '/sidekiq'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
