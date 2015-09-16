@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   private
 
   def setup_spotify_user
-    if current_user and current_user.spotify_info_hash
+    if current_user and current_user.spotify_info_hash and current_user.spotify_info_hash.length > 0
       @spotify_user = RSpotify::User.new(current_user.spotify_info_hash)
     end
   end
