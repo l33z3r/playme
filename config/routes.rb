@@ -20,6 +20,8 @@ Rails.application.routes.draw do
 
   mount Sidekiq::Web, at: '/sidekiq'
 
+  get '/auth/spotify/callback', to: 'users#spotify'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

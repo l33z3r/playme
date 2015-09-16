@@ -30,6 +30,8 @@ class User < ActiveRecord::Base
 
   has_and_belongs_to_many :songs
 
+  serialize :spotify_info_hash, Hash
+
   def generate_device_link_key
     self.device_link_key = SecureRandom.hex
 

@@ -17,8 +17,8 @@ class Song < ActiveRecord::Base
   belongs_to :artist
   has_and_belongs_to_many :users
 
-  validates :artist, presence: true
-  validates :url, uniqueness: true
+  # validates :artist, presence: true
+  # validates :url, uniqueness: true
 
   after_create :harvest_song_url
 

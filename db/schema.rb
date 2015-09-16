@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150808123611) do
+ActiveRecord::Schema.define(version: 20150813205227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,20 +43,11 @@ ActiveRecord::Schema.define(version: 20150808123611) do
     t.integer  "artist_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text     "chord_text"
   end
 
   add_index "songs", ["artist_id"], name: "index_songs_on_artist_id", using: :btree
   add_index "songs", ["genre_id"], name: "index_songs_on_genre_id", using: :btree
-
-  create_table "songs_users", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "song_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "songs_users", ["song_id"], name: "index_songs_users_on_song_id", using: :btree
-  add_index "songs_users", ["user_id"], name: "index_songs_users_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -72,6 +63,7 @@ ActiveRecord::Schema.define(version: 20150808123611) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "device_link_key"
+    t.text     "spotify_info_hash"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -79,6 +71,4 @@ ActiveRecord::Schema.define(version: 20150808123611) do
 
   add_foreign_key "songs", "artists"
   add_foreign_key "songs", "genres"
-  add_foreign_key "songs_users", "songs"
-  add_foreign_key "songs_users", "users"
 end
