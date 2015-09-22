@@ -1,7 +1,13 @@
 <h1>Playlists</h1>
 
-<% @playlists.each do |playlist| %>
-    <div><%= playlist.name %></div>
+<div><h2>Your Songs</h2></div>
+
+<ul>
+<% @songs.each do |song| %>
+
+      <li><%= link_to_if song.songsterr_url, "#{song.name}-#{song.artist.name}", song_path(song) %></li>
+
 <% end %>
+</ul>
 
 <%= link_to 'Link Spotify', '/auth/spotify' %>

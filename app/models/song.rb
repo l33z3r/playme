@@ -25,4 +25,10 @@ class Song < ActiveRecord::Base
   def harvest_song_url
     SongsWorker.perform_async(self.id)
   end
+
+  def self.harvest_songsterr
+    # url = "http://www.songsterr.com/a/wa/bestMatchForQueryString?s=#{song.name}&a=#{song.artist.name}"
+    songsterrSong = Songsterr::Song.where(:artist => song.artist.name, :title => song.name)
+
+  end
 end

@@ -42,7 +42,7 @@ gem 'slim'
 
 # for scraping
 gem 'mechanize'
-
+gem 'songsterr', '~> 0.1.1'
 gem 'rspotify'
 
 # Use ActiveModel has_secure_password

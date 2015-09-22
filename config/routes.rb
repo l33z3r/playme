@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     resources :songs
   end
 
+  resources :songs
+
   devise_for :users
   get 'home/index'
 

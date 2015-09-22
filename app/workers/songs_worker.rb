@@ -6,16 +6,11 @@ class SongsWorker
     song = Song.find(song_id)
     logger.info "working for song #{song.id}"
 
-    #TODO: validate url and find out what site it belongs to for now we use ultimate guitar and assume valid
+    songsterr_song = Songsterr::Song.where(:pattern => "#{song.name} #{song.artist.name}")
 
-    mechanize = Mechanize.new
-    mechanize.user_agent_alias = 'Mac Safari'
-    mechanize.agent.http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    page = mechanize.get(song.url)
-
-    chord_text = page.at('#cont > pre + pre').text.strip
-
-    song.chord_text = chord_text
-    song.save!
+    if !songsterr_song.first.nil?
+      song.songsterr_url = "http://www.songsterr.com/a/wa/song?id=#{songsterr_song.first.id}"
+      song.save!
+    end
   end
 end
