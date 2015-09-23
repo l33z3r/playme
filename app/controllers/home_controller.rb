@@ -13,12 +13,13 @@ class HomeController < ApplicationController
         artist = Artist.find_or_create_by name: track.artists.first.name
 
         song = Song.find_or_create_by spotify_track_id: track.id, spotify_url: track.uri, name: track.name, artist: artist
+        SongsUsers.find_or_create_by user: current_user, song: song
 
       end
 
     end
 
-    @songs = Song.all
+    @songs = current_user.songs
 
 
   end
