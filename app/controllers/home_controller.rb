@@ -3,6 +3,11 @@ class HomeController < ApplicationController
 
     if !@spotify_user.nil?
       @playlist = @spotify_user.playlists.select { |playlist| playlist.name == '<3' }.first
+
+      if !@playlist
+        @playlist = @spotify_user.playlists.first
+      end
+
       @playlist.tracks.each do |track|
 
         artist = Artist.find_or_create_by name: track.artists.first.name
