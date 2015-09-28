@@ -1,13 +1,22 @@
-<h1>Playlists</h1>
 
-<div><h2>Your Songs</h2></div>
+<div class="container">
+  <div class="jumbotron">
+    <h1>Hello, Buddy!</h1>
 
-<ul>
-<% @songs.each do |song| %>
+    <p>Welcome to My Guitar Buddy! </p>
 
-      <li><%= link_to_if song.songsterr_url, "#{song.name}-#{song.artist.name}", song_path(song) %></li>
+    <p>You can easily get the chords for all your favorite songs in Spotify, just link your account here... </p>
 
-<% end %>
-</ul>
+    <br/>
+    <br/>
+    <br/>
 
-<%= link_to 'Link Spotify', '/auth/spotify' %>
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4"><%= button_to 'Link Spotify', '/auth/spotify', class: 'btn-success btn-primary btn-lg btn-block', role: 'button' %></div>
+      <div class="col-md-4"></div>
+    </div>
+
+
+  </div>
+</div>

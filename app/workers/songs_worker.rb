@@ -8,7 +8,7 @@ class SongsWorker
 
     songsterr_song = Songsterr::Song.where(:pattern => "#{song.name} #{song.artist.name}")
 
-    if !songsterr_song.first.nil?
+    if songsterr_song.first
       song.songsterr_url = "http://www.songsterr.com/a/wa/song?id=#{songsterr_song.first.id}"
       song.save!
     end

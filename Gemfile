@@ -45,6 +45,9 @@ gem 'mechanize'
 gem 'songsterr', '~> 0.1.1'
 gem 'rspotify'
 
+# twitter bootstrap
+gem 'bootstrap-sass', '~> 3.3.5'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

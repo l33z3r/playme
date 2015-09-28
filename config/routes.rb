@@ -5,7 +5,9 @@ Rails.application.routes.draw do
     resources :songs
   end
 
-  resources :songs
+  resources :songs do
+    get :sync_spotify, on: :collection
+  end
 
   devise_for :users
   get 'home/index'

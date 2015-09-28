@@ -4,7 +4,8 @@ class SongsController < ApplicationController
   # GET /songs
   # GET /songs.json
   def index
-    @songs = Song.all
+    @songs = current_user.songs.where('songsterr_url IS NOT NULL').order(:name)
+    @songs_without_links = current_user.songs.where('songsterr_url IS NULL').order(:name)
   end
 
   # GET /songs/1
@@ -59,6 +60,26 @@ class SongsController < ApplicationController
       format.html { redirect_to songs_url, notice: 'Song was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def sync_spotify
+    if !@spotify_user.nil?
+      @playlist = @spotify_user.playlists.select { |playlist| playlist.name == '<3' }.first
+
+      if !@playlist
+        @playlist = @spotify_user.playlists.first
+      end
+
+      @playlist.tracks.each do |track|
+
+        artist = Artist.find_or_create_by name: track.artists.first.name
+
+        song = Song.find_or_create_by spotify_track_id: track.id, spotify_url: track.uri, name: track.name, artist: artist
+        SongsUsers.find_or_create_by user: current_user, song: song
+
+      end
+    end
+    redirect_to songs_url, notice: 'Successfully synced with Spotify.'
   end
 
   private

@@ -1,16 +1,42 @@
-%h1 Listing songs
+%h1.pull-left Your songs
 
-%table
+= link_to 'Sync Spotify', sync_spotify_songs_path, class: 'btn-success btn-primary btn-lg pull-right', role: 'button'
+
+%div.clearfix
+
+%h3 Songs we found links for in Songsterr :)
+
+%table.table.table-striped
   %thead
     %tr
-      %th
-      %th
+      %th Song
+      %th Artist
       %th
 
   %tbody
     - @songs.each do |song|
       %tr
-        %td= link_to 'Show', song
+        %td= link_to_if song.songsterr_url, "#{song.name}", song_path(song)
+        %td= song.artist.name
+        %td= link_to 'Edit', edit_song_path(song)
+        %td= link_to 'Destroy', song, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+%h3 Songs we couldn't find in Songsterr :(
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Song
+      %th Artist
+      %th
+
+  %tbody
+    - @songs_without_links.each do |song|
+      %tr
+        %td= link_to_if song.songsterr_url, "#{song.name}", song_path(song)
+        %td= song.artist.name
         %td= link_to 'Edit', edit_song_path(song)
         %td= link_to 'Destroy', song, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
