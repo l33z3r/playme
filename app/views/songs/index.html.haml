@@ -16,7 +16,7 @@
   %tbody
     - @songs.each do |song|
       %tr
-        %td= link_to_if song.songsterr_url, "#{song.name}", song_path(song)
+        %td= link_to_if song.songsterr_url, "#{song.name}", song_url(song, protocol: 'http'), target: '_blank'
         %td= song.artist.name
         %td= link_to 'Edit', edit_song_path(song)
         %td= link_to 'Destroy', song, :method => :delete, :data => { :confirm => 'Are you sure?' }
