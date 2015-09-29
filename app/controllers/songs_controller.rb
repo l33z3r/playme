@@ -63,11 +63,11 @@ class SongsController < ApplicationController
   end
 
   def sync_spotify
-    if !@spotify_user.nil?
+    if @spotify_user
       @playlist = @spotify_user.playlists.select { |playlist| playlist.name == '<3' }.first
 
       if !@playlist
-        @playlist = @spotify_user.playlists.first
+        @playlist = @spotify_user.playlists.third
       end
 
       @playlist.tracks.each do |track|
@@ -78,8 +78,12 @@ class SongsController < ApplicationController
         SongsUsers.find_or_create_by user: current_user, song: song
 
       end
+
+      redirect_to songs_url, notice: 'Successfully synced with Spotify.'
+    else
+      redirect_to songs_url, error: 'Spotify user not found.'
     end
-    redirect_to songs_url, notice: 'Successfully synced with Spotify.'
+
   end
 
   private
