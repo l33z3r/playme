@@ -10,8 +10,10 @@
 
 <nav class="navbar navbar-inverse navbar-static-top">
 
-  <%= link_to 'Home', root_path, class: 'navbar-brand' %>
+  <div class="navbar-brand">GuitarBuddy</div>
   <%= link_to 'My Songs', songs_path, class: 'navbar-brand' %>
+
+  <%= yield :navbar %>
 
 
   <p class="navbar-text pull-right">
