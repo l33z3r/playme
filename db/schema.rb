@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150923185037) do
+ActiveRecord::Schema.define(version: 20151001200633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,33 @@ ActiveRecord::Schema.define(version: 20150923185037) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "playlists", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "spotify_id"
+  end
+
+  create_table "playlists_songs", force: :cascade do |t|
+    t.integer  "playlist_id"
+    t.integer  "song_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "playlists_songs", ["playlist_id"], name: "index_playlists_songs_on_playlist_id", using: :btree
+  add_index "playlists_songs", ["song_id"], name: "index_playlists_songs_on_song_id", using: :btree
+
+  create_table "playlists_users", force: :cascade do |t|
+    t.integer  "playlist_id"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "playlists_users", ["playlist_id"], name: "index_playlists_users_on_playlist_id", using: :btree
+  add_index "playlists_users", ["user_id"], name: "index_playlists_users_on_user_id", using: :btree
+
   create_table "songs", force: :cascade do |t|
     t.string   "name"
     t.string   "songsterr_url"
@@ -50,14 +77,6 @@ ActiveRecord::Schema.define(version: 20150923185037) do
 
   add_index "songs", ["artist_id"], name: "index_songs_on_artist_id", using: :btree
   add_index "songs", ["genre_id"], name: "index_songs_on_genre_id", using: :btree
-
-  create_table "songs_users", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "song_id"
-  end
-
-  add_index "songs_users", ["song_id"], name: "index_songs_users_on_song_id", using: :btree
-  add_index "songs_users", ["user_id"], name: "index_songs_users_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

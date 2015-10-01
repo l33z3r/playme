@@ -4,8 +4,9 @@ class SongsController < ApplicationController
   # GET /songs
   # GET /songs.json
   def index
-    @songs = current_user.songs.where('songsterr_url IS NOT NULL').order(:name)
-    @songs_without_links = current_user.songs.where('songsterr_url IS NULL').order(:name)
+    @playlist = Playlist.find params[:playlist_id]
+    @songs = @playlist.songs.where('songsterr_url IS NOT NULL').order(:name)
+    @songs_without_links = @playlist.songs.where('songsterr_url IS NULL').order(:name)
   end
 
   # GET /songs/1

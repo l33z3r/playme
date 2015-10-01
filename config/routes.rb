@@ -1,12 +1,18 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+
   namespace :api do
     resources :songs
   end
 
-  resources :songs do
-    get :sync_spotify, on: :collection
+  resources :playlists do
+    resources :songs do
+      get :sync_spotify, on: :collection
+    end
+
+    get :select_spotify, on: :collection
+    post :sync_spotify, on: :collection
   end
 
   devise_for :users

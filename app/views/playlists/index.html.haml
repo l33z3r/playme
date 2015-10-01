@@ -1,0 +1,22 @@
+%h1 Listing playlists
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Name
+      %th
+      %th
+      %th
+
+  %tbody
+    - @playlists.each do |playlist|
+      %tr
+        %td= playlist.name
+        %td= link_to 'Show', playlist_songs_path(playlist)
+        %td= link_to 'Edit', edit_playlist_path(playlist)
+        %td= link_to 'Destroy', playlist, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Playlist', new_playlist_path, class: 'btn btn-success'
+= link_to 'Sync Playlist with Spotify', select_spotify_playlists_path, class: 'btn btn-success'

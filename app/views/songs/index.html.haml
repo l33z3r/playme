@@ -1,10 +1,4 @@
-%h1.pull-left Your songs
-
-= link_to 'Sync Spotify', sync_spotify_songs_path, class: 'btn-success btn-primary btn-lg pull-right', role: 'button'
-
-%div.clearfix
-
-%h3 Songs we found links for in Songsterr :)
+%h1.pull-left= @playlist.name
 
 %table.table.table-striped
   %thead
@@ -16,30 +10,16 @@
   %tbody
     - @songs.each do |song|
       %tr
-        %td= link_to_if song.songsterr_url, "#{song.name}", song_url(song, protocol: 'http'), target: '_blank'
+        %td= link_to_if song.songsterr_url, "#{song.name}", playlist_song_path(@playlist, song, protocol: 'http'), target: '_blank'
         %td= song.artist.name
-        %td= link_to 'Edit', edit_song_path(song)
-        %td= link_to 'Destroy', song, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-%h3 Songs we couldn't find in Songsterr :(
-
-%table.table.table-striped
-  %thead
-    %tr
-      %th Song
-      %th Artist
-      %th
-
-  %tbody
+        %td= link_to 'Edit', edit_playlist_song_path(@playlist, song)
+        -#%td= link_to 'Destroy', song, :method => :delete, :data => { :confirm => 'Are you sure?' }
     - @songs_without_links.each do |song|
       %tr
-        %td= link_to_if song.songsterr_url, "#{song.name}", song_path(song)
+        %td= link_to_if song.songsterr_url, "#{song.name}", playlist_song_path(@playlist,song)
         %td= song.artist.name
-        %td= link_to 'Edit', edit_song_path(song)
-        %td= link_to 'Destroy', song, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
+        %td= link_to 'Edit', edit_playlist_song_path(@playlist, song)
+        -#%td= link_to 'Destroy', song, :method => :delete, :data => { :confirm => 'Are you sure?' }
 %br
 
-= link_to 'New Song', new_song_path
+= link_to 'New Song', new_playlist_song_path(@playlist)

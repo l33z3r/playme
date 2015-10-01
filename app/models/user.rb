@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
 
   has_many :login_attempts
 
-  has_and_belongs_to_many :songs
+  has_and_belongs_to_many :playlists
 
   serialize :spotify_info_hash, Hash
 
