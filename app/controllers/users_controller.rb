@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     current_user.spotify_info_hash = spotify_user.to_hash
     current_user.save!
 
-    redirect_to sync_spotify_songs_url, notice: 'Spotify Linked'
+    redirect_to select_spotify_playlists_url, notice: 'Spotify Linked'
 
     #render json: spotify_user.playlists(limit: 50, offset: 50).collect(&:tracks), status: :ok
 

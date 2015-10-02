@@ -1,9 +1,4 @@
-%h1.pull-left Your songs
-
-
-%div.clearfix
-
-%h3 Import playlists from Spotify
+%h2 Select what playlists you want to import from Spotify
 
 = form_tag sync_spotify_playlists_path do
   %table.table.table-striped
@@ -14,11 +9,7 @@
     %tbody
     - @spotify_playlists.each do |p|
       %tr
-        %td= check_box_tag "[playlists][#{p.id}]", p.id, @selected_playlists.member?(p.id)
+        %td= check_box_tag "[playlists][#{p.id}]", p.id, @currently_synced_playlists.member?(p.id)
         %td= p.name
 
   = submit_tag 'Submit'
-
-%br
-
-  -#= button_to 'Update', sync_spotify_songs_path, class: 'btn-success btn-primary btn-lg pull-right', role: 'button'

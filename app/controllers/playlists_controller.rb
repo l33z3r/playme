@@ -8,14 +8,15 @@ class PlaylistsController < ApplicationController
   end
 
   def select_spotify
-    @spotify_playlists = @spotify_user.playlists(limit: 50, offset: 0)
-    @selected_playlists = current_user.playlists.map { |p| p.spotify_id }
+    @spotify_playlists = get_user_spotify_playlists
+    @currently_synced_playlists = current_user.playlists.map { |p| p.spotify_id }
   end
 
   def sync_spotify
-    spotify_lists = @spotify_user.playlists(limit: 50, offset: 0)
-    selected_lists = spotify_lists.select { |p| params[:playlists].member?(p.id) }
-    selected_lists.each do |spotify_playlist|
+    @spotify_playlists = get_user_spotify_playlists
+    @selected_playlists = @spotify_playlists.select { |p| params[:playlists].member?(p.id) }
+
+    @selected_playlists.each do |spotify_playlist|
       playlist = Playlist.find_or_create_by spotify_id: spotify_playlist.id, name: spotify_playlist.name
       PlaylistsUsers.find_or_create_by playlist: playlist, user: current_user
 
@@ -85,6 +86,18 @@ class PlaylistsController < ApplicationController
   end
 
   private
+
+  def get_user_spotify_playlists
+    spotify_playlists = @spotify_user.playlists(limit: 50, offset: 0)
+
+    if spotify_playlists.length == 50
+      #get another batch so we support up to 100 playlists
+      more_spotify_playlists = @spotify_user.playlists(limit: 50, offset: 50)
+    end
+
+    spotify_playlists.concat more_spotify_playlists
+  end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_playlist
       @playlist = Playlist.find(params[:id])
