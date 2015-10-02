@@ -93,9 +93,10 @@ class PlaylistsController < ApplicationController
     if spotify_playlists.length == 50
       #get another batch so we support up to 100 playlists
       more_spotify_playlists = @spotify_user.playlists(limit: 50, offset: 50)
+      spotify_playlists = spotify_playlists.concat more_spotify_playlists
     end
 
-    spotify_playlists.concat more_spotify_playlists
+    spotify_playlists
   end
 
     # Use callbacks to share common setup or constraints between actions.
