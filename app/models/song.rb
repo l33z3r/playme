@@ -16,6 +16,7 @@ class Song < ActiveRecord::Base
   belongs_to :genre
   belongs_to :artist
   has_and_belongs_to_many :playlists
+  has_many :materials
 
   validates :artist, presence: true
 

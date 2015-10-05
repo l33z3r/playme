@@ -24,6 +24,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  has_many :materials
+
   before_create :generate_device_link_key
 
   has_many :login_attempts

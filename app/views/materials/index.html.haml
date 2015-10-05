@@ -1,0 +1,27 @@
+%h1 Listing materials
+
+%table
+  %thead
+    %tr
+      %th Song
+      %th Title
+      %th Url
+      %th Type
+      %th
+      %th
+      %th
+
+  %tbody
+    - @materials.each do |material|
+      %tr
+        %td= material.song
+        %td= material.title
+        %td= material.url
+        %td= material.type
+        %td= link_to 'Show', material
+        %td= link_to 'Edit', edit_material_path(material)
+        %td= link_to 'Destroy', material, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Material', new_material_path

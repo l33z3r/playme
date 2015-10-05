@@ -1,0 +1,7 @@
+- content_for :navbar do
+  %div.navbar-brand= "#{@song.artist.name} - #{@song.name}"
+
+%div#show-song
+  %div#iframe-container
+    %iframe{:src => @material.url, :width => '100%', :height => 700, :frameBorder => 0}
+
