@@ -9,7 +9,7 @@
       %th Link
 
   %tbody
-    - @materials.each do |material|
+    - @my_materials.each do |material|
       %tr
         %td= material.title
         %td= link_to material.url, playlist_song_material_path(@playlist, @song, material), target: '_blank'
@@ -26,7 +26,7 @@
       %th Link
 
   %tbody
-    - @my_materials.each do |material|
+    - @materials.each do |material|
       %tr
         %td= material.title
         %td= link_to material.url, playlist_song_material_path(@playlist, @song, material), target: '_blank'
