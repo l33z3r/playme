@@ -19,16 +19,4 @@ class Song < ActiveRecord::Base
   has_many :materials
 
   validates :artist, presence: true
-
-  after_create :harvest_song_url
-
-  def harvest_song_url
-    SongsWorker.perform_async(self.id)
-  end
-
-  def self.harvest_songsterr
-    # url = "http://www.songsterr.com/a/wa/bestMatchForQueryString?s=#{song.name}&a=#{song.artist.name}"
-    songsterrSong = Songsterr::Song.where(:artist => song.artist.name, :title => song.name)
-
-  end
 end

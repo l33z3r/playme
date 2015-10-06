@@ -24,7 +24,13 @@ class PlaylistsController < ApplicationController
 
         artist = Artist.find_or_create_by name: track.artists.first.name
 
-        song = Song.find_or_create_by spotify_track_id: track.id, spotify_url: track.uri, name: track.name, artist: artist
+        song = Song.find_or_initialize_by spotify_track_id: track.id, spotify_url: track.uri, name: track.name, artist: artist
+
+        if song.new_record?
+          song.save!
+          SongsWorker.perform_async(song.id, current_user.id)
+        end
+
         PlaylistsSongs.find_or_create_by playlist: playlist, song: song
       end
     end

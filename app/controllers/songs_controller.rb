@@ -10,7 +10,8 @@ class SongsController < ApplicationController
   # GET /songs/1
   # GET /songs/1.json
   def show
-    @materials = @song.my_materials
+    @materials = @song.materials
+    @my_materials = current_user.materials.where('song_id = ?', @song)
   end
 
   # GET /songs/new
@@ -63,26 +64,34 @@ class SongsController < ApplicationController
   end
 
   def sync_spotify
-    if @spotify_user
-      @playlist = @spotify_user.playlists.select { |playlist| playlist.name == '<3' }.first
-
-      if !@playlist
-        @playlist = @spotify_user.playlists.third
-      end
-
-      @playlist.tracks.each do |track|
-
-        artist = Artist.find_or_create_by name: track.artists.first.name
-
-        song = Song.find_or_create_by spotify_track_id: track.id, spotify_url: track.uri, name: track.name, artist: artist
-        SongsUsers.find_or_create_by user: current_user, song: song
-
-      end
-
-      redirect_to songs_url, notice: 'Successfully synced with Spotify.'
-    else
-      redirect_to songs_url, error: 'Spotify user not found.'
-    end
+    # if @spotify_user
+    #   @playlist = @spotify_user.playlists.select { |playlist| playlist.name == '<3' }.first
+    #
+    #   if !@playlist
+    #     @playlist = @spotify_user.playlists.third
+    #   end
+    #
+    #   @playlist.tracks.each do |track|
+    #
+    #     artist = Artist.find_or_create_by name: track.artists.first.name
+    #
+    #     song = Song.find_or_initialize_by spotify_track_id: track.id, spotify_url: track.uri, name: track.name, artist: artist
+    #
+    #     binding.pry
+    #
+    #     if song.new_record?
+    #       song.save!
+    #       SongsWorker.perform_async(song.id, current_user.id)
+    #     end
+    #
+    #     SongsUsers.find_or_create_by user: current_user, song: song
+    #
+    #   end
+    #
+    #   redirect_to songs_url, notice: 'Successfully synced with Spotify.'
+    # else
+    #   redirect_to songs_url, error: 'Spotify user not found.'
+    # end
 
   end
 
