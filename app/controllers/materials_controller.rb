@@ -26,6 +26,8 @@ class MaterialsController < ApplicationController
   def create
     @material = @song.materials.build(material_params)
 
+    @material.user = current_user
+    
     respond_to do |format|
       if @material.save
         format.html { redirect_to playlist_song_path(@playlist, @song), notice: 'Material was successfully created.' }
