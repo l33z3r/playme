@@ -11,7 +11,7 @@ class SongsController < ApplicationController
   # GET /songs/1.json
   def show
     @materials = @song.materials
-    @my_materials = current_user.materials.where('song_id = ?', @song)
+    @my_materials = current_user.materials.where('song_id = ?', @song).where('user_id != ?', current_user.id)
   end
 
   # GET /songs/new
