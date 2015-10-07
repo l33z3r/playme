@@ -3,6 +3,7 @@ class Material < ActiveRecord::Base
   belongs_to :user
 
   before_save :check_for_youtube
+
   def check_for_youtube
     self.url = youtube_embedded_url(url) if url.include? 'youtube'
   end
