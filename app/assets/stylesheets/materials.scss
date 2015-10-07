@@ -1,3 +1,18 @@
 // Place all the styles related to the materials controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+#show-material {
+
+  #iframe-container {
+    height: 100%;
+
+    iframe {
+      position: absolute;
+      top: 51px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+}

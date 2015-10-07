@@ -1,35 +1,41 @@
-%h2= "#{@song.artist.name} - #{@song.name}"
+%div#show-song
 
-%h2 Your Material
+  = image_tag @song.album_artwork_url, class: 'album_image'
 
-%table.table.table-striped
-  %thead
-    %tr
-      %th Title
-      %th Link
+  .header= "#{@song.artist.name} - #{@song.name}"
 
-  %tbody
-    - @my_materials.each do |material|
+  .clearfix
+
+  %h5 Your Material
+
+  %table.table.table-striped
+    %thead
       %tr
-        %td= material.title
-        %td= link_to material.url, playlist_song_material_path(@playlist, @song, material), target: '_blank'
-        %td= link_to 'Edit', edit_playlist_song_material_path(@playlist, @song, material)
-        %td= link_to 'Destroy', playlist_song_material_path(@playlist, @song, material), :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %th Title
+        %th Link
+
+    %tbody
+      - @my_materials.each do |material|
+        %tr
+          %td= material.title
+          %td= link_to material.url, playlist_song_material_path(@playlist, @song, material), target: '_blank'
+          %td= link_to 'Edit', edit_playlist_song_material_path(@playlist, @song, material)
+          %td= link_to 'Destroy', playlist_song_material_path(@playlist, @song, material), :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 
-%h2 All Material
+  %h5 All Material
 
-%table.table.table-striped
-  %thead
-    %tr
-      %th Title
-      %th Link
-
-  %tbody
-    - @materials.each do |material|
+  %table.table.table-striped
+    %thead
       %tr
-        %td= material.title
-        %td= link_to material.url, playlist_song_material_path(@playlist, @song, material), target: '_blank'
+        %th Title
+        %th Link
 
-=link_to 'Add New Material', new_playlist_song_material_path(@playlist, @song)
+    %tbody
+      - @materials.each do |material|
+        %tr
+          %td= material.title
+          %td= link_to material.url, playlist_song_material_path(@playlist, @song, material), target: '_blank'
+
+  =link_to 'Add New Material', new_playlist_song_material_path(@playlist, @song)
 
