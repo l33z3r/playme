@@ -12,4 +12,4 @@
         %td= check_box_tag "[playlists][#{p.id}]", p.id, @currently_synced_playlists.member?(p.id)
         %td= p.name
 
-  = submit_tag 'Submit'
+  = submit_tag 'Submit', class: 'btn btn-success'

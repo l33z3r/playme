@@ -4,17 +4,22 @@
   %thead
     %tr
       %th Name
-      -#%th
-      -#%th
+      %th Number of Songs
+      %th
+  -#%th
 
   %tbody
     - @playlists.each do |playlist|
       %tr
         %td= link_to playlist.name, playlist_songs_path(playlist)
-        -#%td= link_to 'Edit', edit_playlist_path(playlist)
-        -#%td= link_to 'Destroy', playlist, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %td= playlist.songs.count
+        %td
+          %i.icon-remove= link_to 'Delete', playlist, :method => :delete, :data => { :confirm => 'Are you sure?' },
+          :class => 'btn btn-danger pull-right'
 
-%br
+        -#%td= link_to 'Edit', edit_playlist_path(playlist)
+
+      %br
 
 = link_to 'New Playlist', new_playlist_path, class: 'btn btn-success'
 = link_to 'Sync Playlist with Spotify', select_spotify_playlists_path, class: 'btn btn-success'

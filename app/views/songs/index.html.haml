@@ -5,13 +5,14 @@
     %tr
       %th Song
       %th Artist
-      %th
+      %th Number of materials
 
   %tbody
     - @songs.each do |song|
       %tr
         %td= link_to "#{song.name}", playlist_song_path(@playlist, song, protocol: 'http')
         %td= song.artist.name
+        %td= song.materials.count
         %td= link_to 'Edit', edit_playlist_song_path(@playlist, song)
         -#%td= link_to 'Destroy', song, :method => :delete, :data => { :confirm => 'Are you sure?' }
 %br

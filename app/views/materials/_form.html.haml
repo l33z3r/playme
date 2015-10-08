@@ -1,15 +1,35 @@
-= form_for([@playlist, @song, @material]) do |f|
+= form_for [@playlist, @song, @material], html: { class: 'form-horizontal' } do |f|
   - if @material.errors.any?
     #error_explanation
       %h2= "#{pluralize(@material.errors.count, "error")} prohibited this material from being saved:"
       %ul
         - @material.errors.full_messages.each do |msg|
           %li= msg
-  .field
-    = f.label :title
-    = f.text_field :title
-  .field
-    = f.label :url
-    = f.text_field :url
-  .actions
-    = f.submit 'Save'
+  .form-group
+    = f.label :title, class:'col-sm-1 control-label'
+    .col-sm-5
+      = f.text_field :title, class: 'form-control'
+  .form-group
+    = f.label :url, class:'col-sm-1 control-label'
+    .col-sm-5
+      = f.text_field :url, class: 'form-control'
+  .form-group
+    .col-sm-offset-1.col-sm-5
+      = f.submit 'Save', class: 'btn btn-success'
+
+-#%form
+-#
+-#    %label{:for => "exampleInputEmail1"} Email address
+-#    %input#exampleInputEmail1.form-control{:placeholder => "Email", :type => "email"}/
+-#
+-#    %label{:for => "exampleInputPassword1"} Password
+-#    %input#exampleInputPassword1.form-control{:placeholder => "Password", :type => "password"}/
+-#  .form-group
+-#    %label{:for => "exampleInputFile"} File input
+-#    %input#exampleInputFile{:type => "file"}/
+-#    %p.help-block Example block-level help text here.
+-#  .checkbox
+-#    %label
+-#      %input{:type => "checkbox"}/
+-#      Check me out
+-#  %button.btn.btn-default{:type => "submit"} Submit
