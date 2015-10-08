@@ -16,6 +16,7 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  device_link_key        :string
+#  spotify_info_hash      :text
 #
 
 class User < ActiveRecord::Base

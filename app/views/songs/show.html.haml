@@ -1,8 +1,11 @@
 %div#show-song
 
-  = image_tag @song.album_artwork_url, class: 'album_image'
-
   .header= "#{@song.artist.name} - #{@song.name}"
+
+  .play_button
+    %iframe{:src => "https://embed.spotify.com/?uri=#{@song.spotify_url}", :width => "300", :height => "100", :frameborder => "0", :allowtransparency => "true"}
+
+  = image_tag @song.album_artwork_url, class: 'album_image'
 
   .clearfix
 

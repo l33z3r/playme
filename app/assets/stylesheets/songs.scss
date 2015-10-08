@@ -3,16 +3,19 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 #show-song {
 
-  .album_image {
+  .play_button {
     float: left;
+  }
+
+  .album_image {
+    float: right;
     width: 80px;
   }
 
   .header {
-    float: left;
     font-weight: bold;
     font-size: 21px;
-    margin-left: 10px;
+    margin-bottom: 10px;
   }
 
 }

@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: materials
+#
+#  id         :integer          not null, primary key
+#  song_id    :integer
+#  title      :string
+#  url        :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  user_id    :integer
+#
+
 class Material < ActiveRecord::Base
   belongs_to :song
   belongs_to :user
