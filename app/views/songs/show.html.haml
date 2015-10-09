@@ -25,7 +25,6 @@
           %td= link_to 'Edit', edit_playlist_song_material_path(@playlist, @song, material)
           %td= link_to 'Destroy', playlist_song_material_path(@playlist, @song, material), :method => :delete, :data => { :confirm => 'Are you sure?' }
 
-
   %h5 All Material
 
   %table.table.table-striped
@@ -41,4 +40,22 @@
           %td= link_to material.url, playlist_song_material_path(@playlist, @song, material), target: '_blank'
 
   =link_to 'Add New Material', new_playlist_song_material_path(@playlist, @song)
+
+  %h5 Related Songs
+
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Title
+        %th Link
+
+    %tbody
+      - @related_songs.each do |song|
+        %tr
+          %td= song.artists.first.name
+          %td= song.name
+
+  =link_to 'Add New Material', new_playlist_song_material_path(@playlist, @song)
+
+
 

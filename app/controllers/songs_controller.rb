@@ -12,6 +12,14 @@ class SongsController < ApplicationController
   def show
     @materials = @song.materials.where('user_id != ?', current_user.id)
     @my_materials = current_user.materials.where('song_id = ?', @song)
+
+    # Get related artitsts
+    @spotify_track = RSpotify::Track.find(@song.spotify_track_id)
+    @related_artists = @spotify_track.artists.first.related_artists
+
+    @related_songs = @related_artists.map do |artist|
+      artist.top_tracks 'IE'
+    end.flatten
   end
 
   # GET /songs/new
