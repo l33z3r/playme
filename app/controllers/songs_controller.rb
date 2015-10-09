@@ -1,5 +1,5 @@
 class SongsController < ApplicationController
-  before_action :set_song, only: [:show, :edit, :update, :destroy, :index]
+  before_action :set_song, only: [:show, :edit, :update, :destroy, :index, :new]
 
   # GET /songs
   # GET /songs.json
@@ -17,8 +17,8 @@ class SongsController < ApplicationController
     @spotify_track = RSpotify::Track.find(@song.spotify_track_id)
     @related_artists = @spotify_track.artists.first.related_artists
 
-    @related_songs = @related_artists.map do |artist|
-      artist.top_tracks 'IE'
+    @related_songs = @related_artists.shuffle[0..4].map do |artist|
+      artist.top_tracks('IE').shuffle.first
     end.flatten
   end
 
@@ -34,7 +34,14 @@ class SongsController < ApplicationController
   # POST /songs
   # POST /songs.json
   def create
-    @song = Song.new(song_params)
+    if song_params[:spotify_url]
+      spotify_track = RSpotify::Track.find(@song.spotify_track_id)
+      @Song = Song.new
+      @song.artist = Artist.find_or_create_by name: spotify_track.artists.name
+      @song.name = spotify_track.name
+      @song.spotify_url = spotify_track.uri
+    end
+    @song = Song.new(song_params) if @song.nil?
 
     respond_to do |format|
       if @song.save

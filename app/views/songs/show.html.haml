@@ -1,61 +1,56 @@
 %div#show-song
 
-  .header= "#{@song.artist.name} - #{@song.name}"
+  %div.col-sm-9
+    .header= "#{@song.artist.name} - #{@song.name}"
+    .play_button
+      %iframe{:src => "https://embed.spotify.com/?uri=#{@song.spotify_url}", :width => "300", :height => "100", :frameborder => "0", :allowtransparency => "true"}
 
-  .play_button
-    %iframe{:src => "https://embed.spotify.com/?uri=#{@song.spotify_url}", :width => "300", :height => "100", :frameborder => "0", :allowtransparency => "true"}
-
-  = image_tag @song.album_artwork_url, class: 'album_image'
-
-  .clearfix
-
-  %h5 Your Material
-
-  %table.table.table-striped
-    %thead
-      %tr
-        %th Title
-        %th Link
-
-    %tbody
-      - @my_materials.each do |material|
+    %h5 Your Material
+    %table.table.table-white
+      %thead
         %tr
-          %td= material.title
-          %td= link_to material.url, playlist_song_material_path(@playlist, @song, material), target: '_blank'
-          %td= link_to 'Edit', edit_playlist_song_material_path(@playlist, @song, material)
-          %td= link_to 'Destroy', playlist_song_material_path(@playlist, @song, material), :method => :delete, :data => { :confirm => 'Are you sure?' }
+          %th Title
+          %th Link
+          %th
+          %th
+      %tbody
+        - @my_materials.each do |material|
+          %tr
+            %td= material.title
+            %td= link_to material.url, playlist_song_material_path(@playlist, @song, material), target: '_blank'
+            %td= link_to 'Edit', edit_playlist_song_material_path(@playlist, @song, material)
+            %td= link_to 'Destroy', playlist_song_material_path(@playlist, @song, material), :method => :delete, :data => { :confirm => 'Are you sure?' }
 
-  %h5 All Material
-
-  %table.table.table-striped
-    %thead
-      %tr
-        %th Title
-        %th Link
-
-    %tbody
-      - @materials.each do |material|
+    %h5 All Material
+    %table.table.table-white
+      %thead
         %tr
-          %td= material.title
-          %td= link_to material.url, playlist_song_material_path(@playlist, @song, material), target: '_blank'
+          %th Title
+          %th Link
 
-  =link_to 'Add New Material', new_playlist_song_material_path(@playlist, @song)
+      %tbody
+        - @materials.each do |material|
+          %tr
+            %td= material.title
+            %td= link_to material.url, playlist_song_material_path(@playlist, @song, material), target: '_blank'
 
-  %h5 Related Songs
+    =link_to 'Add New Material', new_playlist_song_material_path(@playlist, @song)
 
-  %table.table.table-striped
-    %thead
-      %tr
-        %th Title
-        %th Link
+  %div.col-sm-3
+    .header Related Songs
+    - @related_songs.each do |spotify_song|
+      %div.row
+        %div.col-sm-3
+          %iframe{:src => "https://embed.spotify.com/?uri=#{spotify_song.uri}",
+            :width => "80", :height => "80", :frameborder => "0", :allowtransparency => "true"}
+        %div.col-sm-9
+          =form_for [@playlist, @song] do |f|
+            = f.hidden_field :spotify_url, value: spotify_song.uri
+            = f.button :submit do
+              %span.glyphicon.glyphicon-plus-sign
+              =spotify_song.name
 
-    %tbody
-      - @related_songs.each do |song|
-        %tr
-          %td= song.artists.first.name
-          %td= song.name
 
-  =link_to 'Add New Material', new_playlist_song_material_path(@playlist, @song)
 
 
 
