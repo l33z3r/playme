@@ -36,13 +36,13 @@ class SongsController < ApplicationController
   def create
     if song_params[:spotify_track_id]
       spotify_track = RSpotify::Track.find(song_params[:spotify_track_id])
-      @song = Song.new
-      @song.artist = Artist.find_or_create_by name: spotify_track.artists.first.name
-      @song.name = spotify_track.name
-      @song.spotify_url = spotify_track.uri
-      @song.spotify_track_id = spotify_track.id
+      @song = Song.find_or_create_by spotify_track_id: song_params[:spotify_track_id],
+                                     artist: Artist.find_or_create_by(name: spotify_track.artists.first.name),
+                                     name: spotify_track.name, spotify_url: spotify_track.uri
     end
     @song = Song.new(song_params) if @song.nil?
+
+    PlaylistsSongs.find_or_create_by song: @song, playlist: @playlist
 
     respond_to do |format|
       if @song.save
