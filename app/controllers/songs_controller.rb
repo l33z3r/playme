@@ -1,5 +1,5 @@
 class SongsController < ApplicationController
-  before_action :set_song, only: [:show, :edit, :update, :destroy, :index, :new]
+  before_action :set_song, only: [:show, :edit, :update, :destroy, :index, :new, :create]
 
   # GET /songs
   # GET /songs.json
@@ -34,18 +34,19 @@ class SongsController < ApplicationController
   # POST /songs
   # POST /songs.json
   def create
-    if song_params[:spotify_url]
-      spotify_track = RSpotify::Track.find(@song.spotify_track_id)
-      @Song = Song.new
-      @song.artist = Artist.find_or_create_by name: spotify_track.artists.name
+    if song_params[:spotify_track_id]
+      spotify_track = RSpotify::Track.find(song_params[:spotify_track_id])
+      @song = Song.new
+      @song.artist = Artist.find_or_create_by name: spotify_track.artists.first.name
       @song.name = spotify_track.name
       @song.spotify_url = spotify_track.uri
+      @song.spotify_track_id = spotify_track.id
     end
     @song = Song.new(song_params) if @song.nil?
 
     respond_to do |format|
       if @song.save
-        format.html { redirect_to @song, notice: 'Song was successfully created.' }
+        format.html { redirect_to playlist_song_path(@playlist, @song), notice: 'Song was successfully created.' }
         format.json { render :show, status: :created, location: @song }
       else
         format.html { render :new }

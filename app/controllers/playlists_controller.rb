@@ -26,7 +26,7 @@ class PlaylistsController < ApplicationController
 
         song = Song.find_or_initialize_by spotify_track_id: track.id,
                                           spotify_url: track.uri, name: track.name, artist: artist,
-                                          album_artwork_url: track.album.images[1]['url']
+                                           album_artwork_url: track.album.images[1]['url']
 
         if song.new_record?
           song.save!

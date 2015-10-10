@@ -44,13 +44,9 @@
           %iframe{:src => "https://embed.spotify.com/?uri=#{spotify_song.uri}",
             :width => "80", :height => "80", :frameborder => "0", :allowtransparency => "true"}
         %div.col-sm-9
-          =form_for [@playlist, @song] do |f|
-            = f.hidden_field :spotify_url, value: spotify_song.uri
-            = f.button :submit do
-              %span.glyphicon.glyphicon-plus-sign
-              =spotify_song.name
-
-
-
-
-
+          %p.small
+            = "#{spotify_song.name}"
+            %br= spotify_song.artists.first.name
+            =form_for [@playlist, Song.new] do |f|
+              = f.hidden_field :spotify_track_id, value: spotify_song.id
+              = f.submit 'Add to playlist', class: 'btn btn-success btn-xs'
