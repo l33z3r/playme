@@ -50,3 +50,17 @@
             =form_for [@playlist, Song.new] do |f|
               = f.hidden_field :spotify_track_id, value: spotify_song.id
               = f.submit 'Add to playlist', class: 'btn btn-success btn-xs'
+
+  %div.col-sm-3
+    .header Suggested Youtube tutorials
+    - @suggested_material.each do |result|
+      %div.row
+        %div.col-sm-3
+          %iframe{:src => "http://www.youtube.com/embed/#{result.id}",
+            :width => "80", :height => "80", :frameborder => "0", :allowtransparency => "true"}
+        %div.col-sm-9
+          %p.small
+            = "#{result.title}"
+            =form_for [@playlist, @song] do |f|
+              = f.hidden_field :youtube_id, value: result.id
+              = f.submit 'Add material', class: 'btn btn-success btn-xs'

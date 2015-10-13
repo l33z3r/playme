@@ -23,4 +23,21 @@ class Song < ActiveRecord::Base
   has_many :materials, dependent: :destroy
 
   validates :artist, presence: true
+  validates :spotify_track_id, uniqueness: true
+
+
+  def youtube_material
+
+    Yt.configure do |config|
+      config.api_key = 'AIzaSyDaFZsrBWmKjSuxmb_8F6gW-A9Za3F38nA'
+    end
+
+    videos = Yt::Collections::Videos.new(max_results: 10)
+    videos.where(q: "Guitar tutorial #{name} #{artist.name}", order: 'viewCount', safe_search: 'none')
+
+
+    # api_key = 'AIzaSyDaFZsrBWmKjSuxmb_8F6gW-A9Za3F38nA'
+    # client = YouTubeIt::Client.new(:dev_key => api_key)
+    # client.videos_by(:query => "Guitar tutorial #{self.name} #{self.artist.name}", :per_page => 15)
+  end
 end
